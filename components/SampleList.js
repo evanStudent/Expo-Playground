@@ -1,7 +1,8 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native'
-import { ListItem } from '@rneui/themed';
-import { Icon } from '@rneui/themed';
+import { ListItem, Icon } from '@rneui/themed';
+
+fetch()
 
 const courses = [
     {
