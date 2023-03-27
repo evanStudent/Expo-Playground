@@ -1,45 +1,65 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native'
-import { ListItem, Icon } from '@rneui/themed';
+import { ListItem, Icon, Avatar } from '@rneui/themed';
+import { useState, useEffect } from 'react';
 
-fetch()
 
-const courses = [
-    {
-        id: 1,
-        title: 'Cross Platform',
-        code: 5000
-    },
-    {
-        id: 2,
-        title: 'Full Stack 1',
-        code:5055
-    },
-    {
-        id: 3,
-        title: 'Full Stack 2',
-        code: 5010
-    },
-    {   
-        id: 4,
-        title: 'Agile Methodologies',
-        code: 5200
-    }
-]
 
 const SampleList = () => {
+    
+// define state, then name a function that will update state
+// initial state is set as an empty array to ensure it will always be an array
+const [crew, setCrew] = useState([]);
+
+// retrieve our data 
+// empty array ensures function only runs once (for the life of the component)
+
+// useEffect watches the values
+
+useEffect(() => {
+    // fetch our crew list 
+    // fetch returns a promise (an IOU, not the data)
+    // await needs to happen within a function labelled async
+    // await gives us the response 
+    const fetchData = async () => {
+        const response = await fetch('https://api.spacexdata.com/v4/crew')
+        const json = await response.json()
+        // now that we have the json data, we store it in state
+        setCrew(json.sort((a,b) => {
+            const nameA = a.name.toUpperCase();
+            const nameB = b.name.toUpperCase();
+            if(nameA < nameB) {
+                return -1;
+            }
+            if(nameA > nameB) {
+                return 1
+            }
+
+            return 0;
+        }));
+    }
+    fetchData()
+}, [])
+    
+    
+
     return(
         <ScrollView>
             <View>
                 {
-                    courses.map(course => {
+                    
+                    crew.map(crewMember => {
                         return (
-                            <ListItem   onPress={() => console.log(course.id)} 
+                            <ListItem   onPress={() => console.log(crewMember.id)} 
                                         bottomDivider 
-                                        key={course.id}>
+                                        key={crewMember.id}>
+                                <Avatar 
+                                    rounded
+                                    source={{ uri:crewMember.iamge }}
+                                    />
                                 <ListItem.Content>
-                                    <ListItem.Title right>{course.title}</ListItem.Title>
-                                    <ListItem.Subtitle>{course.code}</ListItem.Subtitle>
+                                    <ListItem.Title right>{crewMember.name}</ListItem.Title>
+                                    <ListItem.Subtitle>{crewMember.agency}</ListItem.Subtitle>
                                 </ListItem.Content>
                                 <ListItem.Chevron />
                             </ListItem>
