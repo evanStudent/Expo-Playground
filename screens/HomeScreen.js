@@ -2,7 +2,8 @@ import { SafeAreaView, Text } from "react-native";
 import React from "react";
 import { Button } from '@rneui/themed';
 
-const HomeScreen = () => {
+const HomeScreen = ( { navigation }) => {
+    console.log(navigation)
     return(
         <SafeAreaView>
             <Text>This is the home screen</Text>
@@ -17,9 +18,9 @@ const HomeScreen = () => {
                 marginHorizontal: 50,
                 marginVertical: 10,
                 }}
-                onPress={() => 
-                    { console.log('button pressed') 
-                    navigation.navigate('Screen 2')}}
+                onPress={() => {
+                    navigation.navigate('Screen2')
+                }}
                 />
         </SafeAreaView>
     )
