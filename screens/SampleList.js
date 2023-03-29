@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native'
 import { ListItem, Icon, Avatar } from '@rneui/themed';
 import { useState, useEffect } from 'react';
+import { SafeAreaView } from 'react-native-web';
 
 
 
@@ -25,27 +26,16 @@ useEffect(() => {
         const response = await fetch('https://api.spacexdata.com/v4/crew')
         const json = await response.json()
         // now that we have the json data, we store it in state
-        setCrew(json.sort((a,b) => {
-            const nameA = a.name.toUpperCase();
-            const nameB = b.name.toUpperCase();
-            if(nameA < nameB) {
-                return -1;
-            }
-            if(nameA > nameB) {
-                return 1
-            }
-
-            return 0;
-        }));
-    }
+        setCrew(data.sort((a,b)=>a.name.localeCompare(b.name)));
+     }
     fetchData()
 }, [])
     
     
 
     return(
-        <ScrollView>
-            <View>
+        <SafeAreaView>
+             <ScrollView>
                 {
                     
                     crew.map(crewMember => {
@@ -65,10 +55,9 @@ useEffect(() => {
                             </ListItem>
                         )
                     })
-                }
-            </View>
+                } 
         </ScrollView>
-
+        </SafeAreaView>
     );
 }
 

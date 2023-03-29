@@ -1,15 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
+// import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import SampleList from './components/SampleList';
-import Cards from './components/Cards';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeScreen from './screens/HomeScreen';
+import Screen2 from './screens/Screen2';
+// import Cards from './screens/Cards';
+// import SampleList from './screens/SampleList';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Cards />
-      <SampleList />
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component= { HomeScreen } />
+        <Stack.Screen name="Screen2" component= { Screen2 } />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
